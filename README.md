@@ -25,3 +25,5 @@ Tampilan yang masih sederhana Penggunaan bahasa inggris yang masih secara teknis
 Create database di lakukan manual untuk insert database di lakukan secara ortomatis
 
 Terimakasih
+
+Riyad Kurniawan Gusung
