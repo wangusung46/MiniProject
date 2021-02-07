@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+
+  <head>
+    <title>List Users</title>
+    <link rel="stylesheet" type="text/css" href="/webjars/bootstrap/css/bootstrap.min.css" />
+    <script type="text/javascript" src="/webjars/jquery/jquery.min.js"></script>
+    <script type="text/javascript" src="/webjars/bootstrap/js/bootstrap.min.js"></script>
+  </head>
+  <body>
+    <div class="container text-center">
+      <div>
+        <form th:action="@{/logout}" method="post">
+          <p>
+            Welcome <b>[[${#request.userPrincipal.principal.fullName}]]</b>
+          </p>
+          <input type="submit" value="Sign Out" />
+        </form>
+      </div>
+      <div>
+        <h1>List Cartttt</h1>
+      </div>
+
+      <div>
+        <table class="table table-striped table-bordered">
+          <thead class="thead-dark">
+            <tr>
+              <th>ID</th>
+              <th>idItem</th>
+              <th>itemAdd</th>
+              <th>DateAdd</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr th:if="${booking.idUser == #request.userPrincipal.principal.id}" th:each="booking: ${listBooking}">
+              <td th:text="${booking.id}"></td>
+              <td th:text="${booking.idItem}"></td>
+              <td th:text="${booking.itemAdd}"></td>
+              <td th:text="${booking.dateAdd}"></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      
+      <form th:object="${addBooking}" th:action="@{/users/cart}" method="post" onsubmit="return checkForm(this);">
+        <div>
+          <script type="text/javascript">
+            window.setTimeout("waktu()", 1000);
+            function waktu() {
+                var tanggal = new Date();
+                setTimeout("waktu()", 1000);
+                document.getElementById("dateAdd").innerHTML = tanggal.getHours() + ":" + tanggal.getMinutes() + ":" + tanggal.getSeconds();
+            }
+          </script>
+
+          <input type="hidden" th:field="${listBooking.id}"/>
+          <input type="hidden" name="paying" id="paying" value="0" />
+
+          <div class="form-group row">
+            <label class="col-sm-2 col-form-label">NAME</label>
+            <div class="col-sm-6">
+              <p th:value="${listBooking.idUser}">[[${#request.userPrincipal.principal.fullName}]]</p>
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <label class="col-sm-2 col-form-label">ITEM NAME</label>
+            <div class="col-sm-6">
+              <p th:text="${listItem.name}"></p>
+              <input type="hidden" th:value="${listItem.id}" id="idItem" name="idItem"/>
+              <input type="hidden" th:value="${#request.userPrincipal.principal.id}" id="idUser" name="idUser"/>
+              <input type="hidden" th:value="${listItem.prize}" id="prizeBooking" name="prizeBooking"/>
+            </div>
+          </div>
+
+
+          <div class="form-group row">
+            <label class="col-sm-2 col-form-label">TIME</label>
+            <div class="col-sm-6">
+              <p id='dateAdd'></p>
+              <p th:text="${#dates.second(standardDate)}"></p>
+              <p th:text="${#temporals.second(localDateTime)}"></p>
+              <input type="hidden" th:value="${listBooking.idUser}" id="dataAdd" name="dataAdd"/>
+              <input type="hidden" th:value="${#dates.format(#dates.createNow(), 'dd/MM/yyyy HH:mm')}" id="dateAdd" name="dateAdd"/>
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <label class="col-sm-2 col-form-label">ITEM DESC</label>
+            <div class="col-sm-6">
+              <p th:text="${listItem.descr}"></p>
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <label class="col-sm-2 col-form-label">COUNT ADD</label>
+            <div class="col-sm-6">
+              <input type="number" class="form-control" th:field="${listBooking.itemAdd}" step="1"/>
+<!--              <div th:with="result=${listItem.count * listItem.count}">
+                <span th:text="${result}"></span>
+              </div>-->
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <div class="form-group row">
+              <div class="col-sm-10">
+                <button type="submit" class="btn btn-primary" onclick="return allnumeric(id_number);">ADD TO CART</button>
+              </div>
+            </div>
+
+            <div class="form-group row">
+              <div class="col-sm-10">
+                <a class="btn btn-primary" href="../../" role="button">BACK</a>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </form>
+
+    </div>
+    <script type="text/javascript" th:src="@{/all-numbers.js}"></script>
+    <script type="text/javascript" th:src="@{/CheckForm.js}"></script>
+  </body>
+</html>
