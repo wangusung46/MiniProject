@@ -23,6 +23,7 @@ Login dan Logout,
 Pengguna mengirim informasi barang yang dipesan,
 Pengiriman balasan ketika barang telah di pesan,
 Bisa merubah barang yang telah di pesan sebelum di konfirmasi,
+Flowchart terlampir bernama Untitled Diagram.drawio.
 
 Kekurangan : 
 Belum bisa untuk pengaksessan Backoffice(Admin), 
